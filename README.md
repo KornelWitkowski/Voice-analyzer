@@ -1,11 +1,13 @@
 # Voice-analyzer
-The app processes voice recorded with a microphone in the real-time. It draws oscyllograms, spectrograms and allows signal filtering with the FIR filters. 
+The app processes voice recorded with a microphone in the real-time. It draws oscyllograms, spectrogram, allows signal filtering with the FIR filters and modulate frequency. 
 
-Recorded whistling
+## Examples
+
+Recorded whistling. The Fourier transform corresponds with the sinusoidal oscyllogram.
 
 <img src="https://github.com/KornelWitkowski/Voice-analyzer/blob/main/README_img/VA1.png" width="800" />
 
 
-Band-stopping filter
+Low-passing filter supresses  higher frequencies
 
 <img src="https://github.com/KornelWitkowski/Voice-analyzer/blob/main/README_img/VA2.png" width="800" />
