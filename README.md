@@ -1,5 +1,5 @@
 # Voice-analyzer
-The app process voice recorded with a microphone in real-time. It draws oscyllograms, spectrograms and allows signal filtering with the FIR filters. 
+The app processes voice recorded with a microphone in the real-time. It draws oscyllograms, spectrograms and allows signal filtering with the FIR filters. 
 
 Recorded whistling
 
