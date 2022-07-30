@@ -4,9 +4,18 @@ import numpy as np
 
 from PyQt5.QtCore import pyqtSignal, QObject
 
+from scipy.fft import rfft, irfft
+from scipy.ndimage.interpolation import shift as freq_shift
+
 
 class Communicate(QObject):
     data_signal = pyqtSignal(np.ndarray)
+
+
+def modulate(recording, modulation_freq):
+    recording = rfft(recording)
+    recording = freq_shift(recording, modulation_freq, cval=0)
+    return irfft(recording)
 
 
 def get_recording(stream, chunk, volume, fir_filter):
@@ -22,6 +31,8 @@ def emit_recording(stream, player, source, settings, emit_to_preview=True, emit_
                               settings.CHUNK,
                               settings.volume,
                               settings.filters.fir_filter)
+    if settings.modulation:
+        recording = modulate(recording, settings.modulation_freq_shift)
 
     if emit_to_preview and settings.preview:
         source.data_signal.emit(recording)
@@ -29,6 +40,7 @@ def emit_recording(stream, player, source, settings, emit_to_preview=True, emit_
         player.write(np.int16(recording), settings.CHUNK)
 
     return recording
+
 
 def save_recording_to_file(p, frames, rate):
     file = wave.open("recording.wav", 'wb')

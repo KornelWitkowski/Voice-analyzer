@@ -74,6 +74,9 @@ class Settings:
         self.spectrogram_f_max = 5000
         self.spectrogram_chunks_per_ftt = 5    # number of chunks used to calculate Fourier transform
 
+        self.modulation = False
+        self.modulation_freq_shift = 0
+
         # Action settings
 
         self.record = False

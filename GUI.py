@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (QMainWindow, QFrame, QPushButton, QSlider, QGridLayout,
-                             QLabel, QWidget, QLineEdit, QRadioButton, QMessageBox)
+                             QLabel, QWidget, QLineEdit, QRadioButton, QMessageBox, QCheckBox)
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 
@@ -75,6 +75,9 @@ class MainWindow(QMainWindow):
 
         self.filter_group = FilterGroup(self)
         self.layout.addWidget(self.filter_group, *(12, 0, 6, 3))
+
+        self.modulation_group = ModulationGroup(self)
+        self.layout.addWidget(self.modulation_group, *(18, 0, 6, 3))
 
         self.myFig = OscillogramAndSpectrogramCanvas(self, [])
         self.layout.addWidget(self.myFig, *(0, 10, 30, 3))
@@ -176,10 +179,6 @@ class FilterGroup(QWidget):
         self.lay.addWidget(self.radiobutton, 4, 3, 1, 2)
 
         self.labelBlank = QLabel("")
-        self.labelBlank.setFont(QFont('Arial', 14))
-        self.lay.addWidget(self.labelBlank, *(5, 0, 1, 3))
-
-        self.labelBlank = QLabel("")
         self.labelBlank.setFont(QFont('Arial', 12))
         self.lay.addWidget(self.labelBlank, *(10, 0, 1, 3))
 
@@ -194,10 +193,10 @@ class FilterGroup(QWidget):
         self.labelFHigh = QLabel("f <sub> high </sub>")
         self.labelFHigh.setFont(QFont('Arial', 11))
         self.labelFHigh.setAlignment(Qt.AlignRight)
-        self.lay.addWidget(self.labelFHigh, *(12, 0, 1, 1))
+        self.lay.addWidget(self.labelFHigh, *(11, 2, 1, 1))
         self.textboxFHigh = QLineEdit(self)
         self.textboxFHigh.setFixedSize(100, 25)
-        self.lay.addWidget(self.textboxFHigh, *(12, 1, 1, 1))
+        self.lay.addWidget(self.textboxFHigh, *(11, 3, 1, 1))
 
         self.setFilterBtn = QPushButton(text='Set')
         self.setFilterBtn.setFixedSize(100, 30)
@@ -305,6 +304,42 @@ class DiagramsSettingsGroup(QWidget):
         self.main_window.layout.addWidget(self.main_window.myFig, *(0, 10, 30, 3))
 
         return
+
+
+class ModulationGroup(QWidget):
+    def __init__(self, main_window):
+        QWidget.__init__(self)
+        self.main_window = main_window
+        self.lay = QGridLayout(self)
+
+        self.labelFFT = QLabel("Modulation")
+        self.labelFFT.setFont(QFont('Arial', 14))
+        self.lay.addWidget(self.labelFFT, *(0, 0, 1, 3))
+
+        self.labelBlank = QLabel("")
+        self.labelBlank.setFont(QFont('Arial', 14))
+        self.lay.addWidget(self.labelBlank, *(1, 0, 1, 3))
+
+        self.checkboxModulation = QCheckBox("Set")
+        self.checkboxModulation.stateChanged.connect(self.check_modulation_box)
+        self.lay.addWidget(self.checkboxModulation, *(3, 0, 1, 3))
+
+        self.sliderModulation = QSlider(Qt.Horizontal)
+        self.lay.addWidget(self.sliderModulation, *(3, 1, 1, 3))
+        self.sliderModulation.setMinimum(-20)
+        self.sliderModulation.setMaximum(20)
+        self.sliderModulation.setValue(0)
+        self.sliderModulation.setFocusPolicy(Qt.StrongFocus)
+        self.sliderModulation.setTickPosition(QSlider.TicksBothSides)
+        self.sliderModulation.setTickInterval(2)
+        self.sliderModulation.setSingleStep(0)
+        self.sliderModulation.valueChanged.connect(self.change_modulation_slider)
+
+    def check_modulation_box(self):
+        self.main_window.settings.modulation = self.sender().isChecked()
+
+    def change_modulation_slider(self):
+        self.main_window.settings.modulation_freq_shift = self.sliderModulation.value()
 
 
 class OscillogramAndSpectrogramCanvas(FigureCanvas, TimedAnimation):
