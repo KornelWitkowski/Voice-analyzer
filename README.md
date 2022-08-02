@@ -1,5 +1,5 @@
 # Voice-analyzer
-The app processes voice recorded with a microphone in the real-time. It draws oscyllograms, spectrogram, allows signal filtering with the FIR filters and modulate frequency. 
+The app processes voice recorded with a microphone in the real-time. It draws oscyllograms, spectrograms, allows signal filtering with the FIR filters and modulates frequency. 
 
 ## Examples
 
