@@ -8,6 +8,6 @@ Recorded whistling. The Fourier transform corresponds with the sinusoidal oscyll
 <img src="https://github.com/KornelWitkowski/Voice-analyzer/blob/main/README_img/VA1.png" width="800" />
 
 
-Low-passing filter supresses  higher frequencies
+The low-passing filter supresses the higher frequencies
 
 <img src="https://github.com/KornelWitkowski/Voice-analyzer/blob/main/README_img/VA2.png" width="800" />
